@@ -1,0 +1,33 @@
+{% extends "trains/layout.html" %}
+{% block body %}
+<h1>Train {{ train.id }}</h1>
+<ul>
+   
+   <li>Origin: {{ train.origin }}</li>
+   <li>Destinatn: {{ train.destination }}</li>
+   <li>Duration: {{ train.duration }}</li>
+
+   
+
+</ul>
+<h2>Passengers</h2>
+<ul>
+    {% for passenger in passengers %}
+    <li>{{passenger}}</li>
+    {% empty %}
+    <li>No passenger</li>
+    {% endfor %}
+</ul>
+<h3>Add Passengers</h3> 
+<form action="{% url 'book' train.id %}"method="post">
+    {% csrf_token %}
+    <select name="passenger">
+        {% for passenger in non_passengers %}
+        <option value="{{ passenger.id }}">{{ passenger }}</option>
+        {% endfor %}
+    
+    </select>
+    <input type="submit">
+</form>
+<a href="{% url 'index' %}">Back to Train List</a>
+{% endblock %}
